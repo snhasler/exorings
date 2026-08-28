@@ -35,7 +35,7 @@ import utils
 
 plt.rcParams.update({"font.size": 14})
 
-ROMAN_FILTER_DIR = Path("filters/")
+ROMAN_FILTER_DIR = Path("filters/roman/")
 
 STELLAR_SPECTRUM_FILE = Path("spectra/star/SOLARSPECTRUM.DAT")
 KARKOSCHKA_SPECTRA  = Path("spectra/planet/karkoschka1995low.dat")
@@ -298,15 +298,31 @@ def sort_by_phase(phases, nus, lit_fracs):
     phases_s, nus_s, lit_s = map(np.array, zip(*sorted_triplets))
     return phases_s, nus_s, lit_s
 
-def plot_spectra_dict(wavelength, spectra_dict, title,
+def get_filter_lims_for_plot(filt_name):
+    '''Returns min, max wavelenghths of Roman filter of interest.'''
+    # read in filter data
+    wavel, transm = utils.read_roman_filter_curve(filt_name)
+    # get range over which filter has non-zero transmission
+    mask = transm > 0
+
+    return wavel[mask].min(), wavel[mask].max()
+
+def plot_spectra_dict(wavelength, spectra_dict, title, 
                       ylabel="Albedo spectrum", cmap_name="viridis"):
     """Plot spectra stored in the dictionary."""
+
+    # read in some filters for plotting
+    b1_min, b1_max = get_filter_lims_for_plot("1F")
+    b2_min, b2_max = get_filter_lims_for_plot("2F")
+    b3_min, b3_max = get_filter_lims_for_plot("3F")
+    b4_min, b4_max = get_filter_lims_for_plot("4F")
+
     fig, ax = plt.subplots(figsize=(10, 5))
     cmap    = plt.get_cmap(cmap_name)
     phases  = np.array(list(spectra_dict.keys()))
 
     for i, (phase, spectrum) in enumerate(spectra_dict.items()):
-        ax.plot(wavelength, spectrum, color=cmap(i), label=f"{phase:.1f}°")
+        ax.plot(wavelength, spectrum, color=cmap(i))
 
     norm = plt.Normalize(np.min(phases), np.max(phases))
     sm   = plt.cm.ScalarMappable(cmap=cmap, norm=norm)
@@ -314,13 +330,16 @@ def plot_spectra_dict(wavelength, spectra_dict, title,
     cbar = plt.colorbar(sm, ax=ax, ticks=np.linspace(0, 180, 10))
     cbar.set_label("Phase angle (degrees)")
 
-    ax.axvspan(546, 604, color="lightgray", alpha=0.6, label="Roman B1")     # TODO: update to read in filter info from file
-    ax.axvspan(777.1, 873.9, color="lightgray", alpha=0.6, label="Roman B4") # TODO: ^
+    ax.axvspan(b1_min, b1_max, color="powderblue", alpha=0.5, label="B1")     
+    ax.axvspan(b2_min, b2_max, color="lightgreen", alpha=0.35, label="B2")     
+    ax.axvspan(b3_min, b3_max, color="orange", alpha=0.35, label="B3")     
+    ax.axvspan(b4_min, b4_max, color="palevioletred", alpha=0.45, label="B4") 
     ax.legend()
     ax.set_title(title)
     ax.set_xlabel("Wavelength (nm)")
     ax.set_ylabel(ylabel)
-    ax.set_xlim(295, 1005)
+    ax.set_xlim(300, 1005)
+    ax.set_ylim(-0.01, None)
     plt.tight_layout()
     return fig, ax
 
