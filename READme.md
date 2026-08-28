@@ -144,39 +144,27 @@ python illumination2flux.py
 
   - Planet Spectrum : The default planetary spectrum is a Jupiter geometric albedo spectrum based on: [Karkoschka (1998)](https://ui.adsabs.harvard.edu/abs/1998Icar..133..134K/abstract)
 
-      Located in:
-
-```text
-spectra/planet/
-```
+      Located in: ```spectra/planet/```
 
  - **Ring Spectrum**
 
     - The default ring spectrum is derived from Cassini VIMS observations of Saturn's rings: [Hedman et al. (2013)](https://ui.adsabs.harvard.edu/abs/2013Icar..223..105H/abstract)
 
-      Located in: 
+      Located in: ```spectra/rings/```
 
-```text
-spectra/rings/
-```
 
  - **Stellar Spectrum**
     - The default spectrum is a Solar spectrum. 
 
-      Located in:
+      Located in: ```spectra/star/```
 
-```text
-spectra/star/
-```
 
   - **Roman Coronagraph Instrument Filters**
     - Roman filter curves were retreived from the [Roman Science Support Center at IPAC at Caltech](https://roman.ipac.caltech.edu/page/additional-coronagraph-instrument-parameters-model-and-data-html#Color_Filter_Curves).
-      Located in: 
-```text
-filters/roman/
-```
+    
+      Located in: ```filters/roman/```
 
-Currently supported filters in the code include: 1F, 2F, 3F, 4F, 3C, 4C 
+    - Currently supported filters in the code include: 1F, 2F, 3F, 4F, 3C, 4C 
 
 
 <!-- ## Assumptions and Current Limitations
