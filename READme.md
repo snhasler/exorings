@@ -19,6 +19,24 @@ The code produces broadband and spectrally resolved planet-star flux ratios as a
 
 ---
 
+
+## Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/snhasler/exorings.git
+cd exorings
+```
+
+Install required dependencies:
+
+```bash
+pip install numpy scipy matplotlib pandas astropy
+```
+
+---
+
 ## Main Components
 
 ### `calc_ringed_planet_illumination.py`
@@ -171,21 +189,6 @@ filters/roman/
 Currently supported filters in the code include: 1F, 2F, 3F, 4F, 3C, 4C 
 
 ---
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/snhasler/exorings.git
-cd exorings
-```
-
-Install required dependencies:
-
-```bash
-pip install numpy scipy matplotlib pandas astropy
-```
 
 
 
