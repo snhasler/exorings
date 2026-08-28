@@ -17,7 +17,6 @@ A forward model for simulating the illumination, shadowing, and reflected-light 
 
 The code produces broadband and spectrally resolved planet-star flux ratios as a function of orbital phase.
 
----
 
 
 ## Installation
@@ -35,7 +34,6 @@ Install required dependencies:
 pip install numpy scipy matplotlib pandas astropy
 ```
 
----
 
 ## Main Components
 
@@ -58,7 +56,6 @@ planet_illumination_*.txt
 ring_illumination_*.txt
 ```
 
----
 
 ### `illumination2flux.py`
 
@@ -81,8 +78,6 @@ For each orbital epoch, the script:
 - Broadband phase curves
 - Comparison plots between different system geometries (if multiple geometries are passed)
 
----
-
 ### `geometry.py`
 
 Orbital and ring geometry module.
@@ -98,7 +93,6 @@ Provides functions for:
 
 This module defines the geometric framework used throughout the simulations.
 
----
 
 ### `ray_casting.py`
 
@@ -111,7 +105,6 @@ Provides functions for determining:
 - Ring shadowing of the planet
 - Ring occulatations
 
----
 
 ### `utils.py`
 
@@ -137,8 +130,6 @@ Update desired system parameters and run:
 python calc_ringed_planet_illumination.py
 ```
 
----
-
 ### Step 2: Generate Spectra and Phase Curves
 
 Update desired system paramters and run:
@@ -148,7 +139,6 @@ Update desired system paramters and run:
 ```bash
 python illumination2flux.py
 ```
----
 
 - **Input Data**
 
@@ -188,9 +178,6 @@ filters/roman/
 
 Currently supported filters in the code include: 1F, 2F, 3F, 4F, 3C, 4C 
 
----
-
-
 
 <!-- ## Assumptions and Current Limitations
 
@@ -229,13 +216,10 @@ Karkoschka, E. (1998). Methane, ammonia, and temperature measurements of the Jov
 Hedman, M. M., Nicholson, P. D., Cuzzi, J. N., Clark, R. N., Filacchione, G., Capaccioni, F., & Ciarniello, M. (2013). Connections between spectra and structure in Saturn’s main rings based on Cassini VIMS data. [Icarus, 223(1), 105-130.](https://ui.adsabs.harvard.edu/abs/2013Icar..223..105H/abstract)
 
 
-
-
 ## Author
 
 **Samantha Hasler**, [shasler@stsci.edu](mailto:shasler@stsci.edu)  
 Space Telescope Science Institute (STScI)
-
 
 
 ## License
