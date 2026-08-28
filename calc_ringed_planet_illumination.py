@@ -51,8 +51,8 @@ class SimulationParams:
         save_files: bool = True,           # write illumination-fraction .txt files
         save_figs: bool = False,             # save figures 
         # Output locations (only used if save_files / save_figs = True)
-        output_dir: str = ("/Users/shasler/Documents/Projects/Roman/fraction_lit_output/exorings_test/1xSat_obl26.73_incl90/"),
-        plot_dir: str = "/Users/shasler/Documents/Projects/Roman/fraction_lit_output/plots/"
+        output_dir: str = ("fraction_lit_output/"),
+        plot_dir: str = "plots/"
         ):
         
         self.a_planet_au = a_planet_au
