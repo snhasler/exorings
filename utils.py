@@ -188,7 +188,7 @@ def FpFs_planet(Ag_planet, R_planet_AU, a_AU, alpha_deg):
 
     return  Ag_planet * (R_planet_AU / a_AU)**2 * phi_planet
 
-def read_roman_filter_curve(filter_name, filepath="filters/"):
+def read_roman_filter_curve(filter_name, filepath="filters/roman/"):
     """
     Read in Roman CGI filter transmission curves from data files
 
