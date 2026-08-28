@@ -784,21 +784,18 @@ def convert_flux_to_albedo(flux_spectrum, flux_wavel, stellar_spectrum,
 
     return albedo_spectrum, FpFs
 
-def convert_Lizzie_theta_to_alpha(inc, theta):
-    '''
-    Convert Lizzie's theta to traditional alpha phase angle.
-    Follows her Equation 2
+def sort_trueanom_flux(df):
+    """
+    Sort a dataframe of true anomaly and flux ratio values 
+    by true anomaly. Usually used for plotting purposes.
 
     Parameters
     ----------
-    inc : float
-        Inclination angle in radians.
-    theta : float
-        Theta angle in radians.
+    df : pandas.DataFrame
+        dataframe generated from a combined phase curve file.
+    """
+    sorted_ids = np.argsort(df["true_anomaly"])
+    true_anom_sorted = df["true_anomaly"][sorted_ids]
+    fpfs_sorted = df["fpfs_ringedplanet"][sorted_ids]
+    return true_anom_sorted, fpfs_sorted, sorted_ids
 
-    Returns
-    -------
-    alpha : float
-        Alpha angle in radians.
-    '''
-    return np.arccos( np.sin(inc) * np.sin(theta + 90) )
