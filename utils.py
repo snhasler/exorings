@@ -135,13 +135,14 @@ def get_karkoschka_Jupiter_spectrum(filepath="spectra/planet/karkoschka1995low.d
 
     return vacuum_lambda_nm, alb_Jup
 
-def load_ring_albedo(target_wavelength_nm):
+def load_ring_albedo(target_wavelength_nm, 
+                     filepath="spectra/rings/Bring_110-111e3km_Hedman2013_nm.txt"):
     """
     Load Hedman+2013 ring spectrum and interpolate onto the planet
     wavelength grid.
     """
-    lambda_rings, if_rings = np.loadtxt(filepath="spectra/rings/Bring_110-111e3km_Hedman2013_nm.txt", 
-                                        skiprows=1, dtype=float, unpack=True, delimiter=",")
+    lambda_rings, if_rings = np.loadtxt(filepath, skiprows=1, dtype=float, 
+                                        unpack=True, delimiter=",")
     albedo_rings    = np.interp(target_wavelength_nm, lambda_rings, if_rings)
 
     return albedo_rings
