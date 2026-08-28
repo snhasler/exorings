@@ -60,15 +60,15 @@ PLANET_PHASEFUNC = "Lambertian"
 
 # Define all configurations to process.
 # Point RUN_DIRS at one directory per ring-size/obliquity combination;
-# all inclinations found inside each directory will be picked up automatically
+# all inclinations found inside each directory will be picked up
 RUN_DIRS = [
         Path("/Users/shasler/Documents/Projects/Roman/fraction_lit_output/exorings_test/1xSat_obl26.73_incl90/")
-        # Path("../planet_sims/1xSaturn_allIncl/obl30_phi0/"),
+        # Path("fraction_lit_output/"),
             ]
 
 RINNER = 1.43 * RPLANET # inner ring radius
 ROUTER = 2.47 * RPLANET # outer ring radius
-OBLIQ = 26.73 # DEGREES    # ring obliquity in degrees
+OBLIQ = 26.73           # ring obliquity in degrees
 
 FILTER_FILE = B1_FILTER # filter to use for processing
 
@@ -296,13 +296,6 @@ def sort_by_phase(phases, nus, lit_fracs):
     sorted_triplets = sorted(zip(phases, nus, lit_fracs), key=lambda x: x[0])
     phases_s, nus_s, lit_s = map(np.array, zip(*sorted_triplets))
     return phases_s, nus_s, lit_s
-
-
-def load_planet_albedo():
-    """Load Jupiter albedo spectrum from Karkoschka data."""
-    lambda_vac, lambda_air, methane, jup_albedo, sat_albedo, ur_albedo, nep_albedo, titan_alb = np.loadtxt(KARKOSCHKA_SPECTRA, unpack=True)
-
-    return lambda_vac, jup_albedo
 
 def load_ring_albedo(target_wavelength_nm):
     """
@@ -672,7 +665,7 @@ def plot_all_phase_curves(all_results: list) -> tuple:
 
 def main():
     # Load spectral data once 
-    lambda_vac_nm, jup_albedo = load_planet_albedo()
+    lambda_vac_nm, jup_albedo = utils.get_karkoschka_Jupiter_spectrum()
     ring_albedo               = load_ring_albedo(lambda_vac_nm)
     stellar_wavel, stellar_spectrum = utils.read_stellar_spectrum(STELLAR_SPECTRUM_FILE, 
                                                                   wavel_units=u.Angstrom)
