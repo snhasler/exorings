@@ -4,9 +4,9 @@ Apply the f_planet and f_ring illumination fractions to the planet
 and ring spectra.
 
 This script:
-1. Reads precomputed illumination-fraction files for the planet and rings,
+1. Reads precomputed illumination-fraction files for the planet and rings
    for one or more simulation configurations (different inclinations / ring
-   sizes).
+   sizes), using output files from calc_ringed_planet_illumination.py.
 2. Applies f_planet and f_ring to the input albedo spectra.
 3. Applies a Lambertian phase function to the planet spectrum.
 4. Converts albedo spectra to flux / contrast space.
@@ -14,13 +14,6 @@ This script:
 6. Computes band-integrated flux in the Roman bandpasses.
 7. Saves output spectra and phase curves.
 8. Overlays phase curves from all configurations.
-
-Notes
------
-- Uses output files from ringed_planet_illumination.py
-- Assumes helper functions exist in utils.py
-- To process additional inclinations or ring sizes, add RunConfig entries
-  to the CONFIGS list below
 """
 
 import re
@@ -52,19 +45,18 @@ B4C_FILTER = ROMAN_FILTER_DIR / "transmission_ID-18_4C_v0.csv"
 RPLANET    = 69911 * u.km
 SEPARATION = 5.2   * u.AU # planet-star separation
 
-roman_filter     = "1" # Roman filter name (1, 3C, 4, 4C) # TODO: UPDATE FILTER NAME BEFORE RUNNING
+roman_filter     = "1" # Roman filter name (1, 3C, 4, 4C)
 SAVE_OUTPUTS     = True
 MAKE_PLOTS       = True
 # Phase function string for text file
 PLANET_PHASEFUNC = "Lambertian"
-PLOT_DIR = "/Users/shasler/Documents/Projects/Roman/fraction_lit_output/plots/"
+PLOT_DIR = "fraction_lit_output/plots/" # where plots will be output
 
 # Define all configurations to process.
 # Point RUN_DIRS at one directory per ring-size/obliquity combination;
 # all inclinations found inside each directory will be picked up
 RUN_DIRS = [
-        Path("/Users/shasler/Documents/Projects/Roman/fraction_lit_output/exorings_test/1xSat_obl26.73_incl90/")
-        # Path("fraction_lit_output/"),
+        Path("fraction_lit_output/1xSat_obl26.73_allIncl/"), # <-- this should be the path where your output files are stored
             ]
 
 RINNER = 1.43 * RPLANET # inner ring radius
