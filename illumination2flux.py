@@ -57,6 +57,7 @@ SAVE_OUTPUTS     = True
 MAKE_PLOTS       = True
 # Phase function string for text file
 PLANET_PHASEFUNC = "Lambertian"
+PLOT_DIR = "/Users/shasler/Documents/Projects/Roman/fraction_lit_output/plots/"
 
 # Define all configurations to process.
 # Point RUN_DIRS at one directory per ring-size/obliquity combination;
@@ -646,10 +647,8 @@ def plot_all_phase_curves(all_results: list) -> tuple:
     ax.set_ylabel(r"$F_p/F_s$")
     ax.legend(loc='upper right')
     plt.tight_layout()
-    # plt.savefig('../plots/combined_phase_curves_5-10xrings.png', 
-    #             dpi=300, bbox_inches='tight')
-    # plt.savefig('../plots/combined_phase_curves_5-10xrings.pdf', 
-    #             dpi=300, bbox_inches='tight')
+    plt.savefig(PLOT_DIR + f'obl{OBLIQ}_Rin{RINNER}_Rout{ROUTER}_all_phase_curves.png', 
+                dpi=300, bbox_inches='tight')
     return fig, ax
 
 def main():
