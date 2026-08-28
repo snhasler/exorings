@@ -50,23 +50,25 @@ B4C_FILTER = ROMAN_FILTER_DIR / "transmission_ID-18_4C_v0.csv"
 
 # Physical constants fixed for every run
 RPLANET    = 69911 * u.km
-SEPARATION = 5.2   * u.AU # TODO: change separation if needed
+SEPARATION = 5.2   * u.AU # planet-star separation
 
-PLANET_PHASEFUNC = "Lambertian"
-SAVE_OUTPUTS     = False
-MAKE_PLOTS       = True
 roman_filter     = "1" # Roman filter name (1, 3C, 4, 4C) # TODO: UPDATE FILTER NAME BEFORE RUNNING
+SAVE_OUTPUTS     = True
+MAKE_PLOTS       = True
+# Phase function string for text file
+PLANET_PHASEFUNC = "Lambertian"
 
 # Define all configurations to process.
 # Point RUN_DIRS at one directory per ring-size/obliquity combination;
 # all inclinations found inside each directory will be picked up automatically
 RUN_DIRS = [
-        Path("../planet_sims/1xSaturn_allIncl/obl30_phi0/"),
+        Path("/Users/shasler/Documents/Projects/Roman/fraction_lit_output/exorings_test/1xSat_obl26.73_incl90/")
+        # Path("../planet_sims/1xSaturn_allIncl/obl30_phi0/"),
             ]
 
 RINNER = 1.43 * RPLANET # inner ring radius
 ROUTER = 2.47 * RPLANET # outer ring radius
-OBLIQ = 90 # DEGREES    # ring obliquity in degrees
+OBLIQ = 26.73 # DEGREES    # ring obliquity in degrees
 
 FILTER_FILE = B1_FILTER # filter to use for processing
 
@@ -580,19 +582,6 @@ def process_config(cfg: RunConfig, lambda_vac_nm, jup_albedo,
         utils.save_spectra_per_phase_to_file(total_contrast_dict, lambda_vac_nm,
                                              cfg.file_dir / output_files["combined_contrast"])
 
-    # ── flux residuals for diagnostic plot ────────────────────────
-    residuals_dict = {phase: total_flux_dict[phase] - planet_flux_dict[phase] for phase in planet_flux_dict}
-
-    if MAKE_PLOTS:
-        fig, ax = plt.subplots(figsize=(10, 5))
-        cmap = plt.get_cmap("YlOrBr_r")
-        for i, (phase, residuals) in enumerate(residuals_dict.items()):
-            ax.plot(lambda_vac_A, residuals, color=cmap(i))
-        ax.set_xlabel(r"Wavelength ($\AA$)")
-        ax.set_ylabel(r"Flux residuals (erg s$^{-1}$ cm$^{-2}$ $\AA^{-1}$)")
-        ax.set_title(f"Residuals: (Planet + Ring) - Planet  [{cfg.label}]")
-        plt.tight_layout()
-
     # ── Band-integrated flux ratio ──────────────────────────────────
     _, fpfsBand_planet_dict, _ = compute_band_fluxes_from_albedo(spectra_per_phase_planet,
                                                                  lambda_vac_A, stellar_spectrum, 
@@ -681,42 +670,6 @@ def plot_all_phase_curves(all_results: list) -> tuple:
     #             dpi=300, bbox_inches='tight')
     return fig, ax
 
-def plot_all_band_albedos(all_results: list) -> tuple:
-    """
-    Overlay band-averaged phase curves for every processed configuration.
-
-    Parameters
-    ----------
-    all_results : list of dict
-        List of result dicts returned by process_config().
-
-    Returns
-    -------
-    fig, (ax1, ax2) : Figure and Axes for planet and ring albedo panels
-    """
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 4))
-
-    for result in all_results:
-        cfg           = result["cfg"]
-        planet_phases = sorted(result["planet_band_albedo"].keys())
-        ring_phases   = sorted(result["ring_band_albedo"].keys())
-
-        ax1.scatter(planet_phases, [result["planet_band_albedo"][p] for p in planet_phases],
-                    color=cfg.color, s=8, label=cfg.label)
-        ax2.scatter(ring_phases, [result["ring_band_albedo"][p] for p in ring_phases],
-                    color=cfg.color, s=8, label=cfg.label)
-
-    for ax, title in zip((ax1, ax2), 
-                         (f"Planet albedo in Band {roman_filter}", f"Ring albedo in Band {roman_filter}")):
-        ax.set_xlabel("Phase angle (degrees)")
-        ax.set_ylabel("Band-averaged albedo")
-        ax.set_title(title)
-        ax.set_xlim(0, 180)
-        ax.legend(fontsize=10)
-
-    plt.tight_layout()
-    return fig, (ax1, ax2)
-
 def main():
     # Load spectral data once 
     lambda_vac_nm, jup_albedo = load_planet_albedo()
@@ -735,7 +688,6 @@ def main():
     # Overlay all configurations on shared plots
     if MAKE_PLOTS:
         plot_all_phase_curves(all_results)
-        plot_all_band_albedos(all_results)
         plt.show()
 
 if __name__ == "__main__":
