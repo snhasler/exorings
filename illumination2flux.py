@@ -297,17 +297,6 @@ def sort_by_phase(phases, nus, lit_fracs):
     phases_s, nus_s, lit_s = map(np.array, zip(*sorted_triplets))
     return phases_s, nus_s, lit_s
 
-def load_ring_albedo(target_wavelength_nm):
-    """
-    Load Hedman+2013 ring spectrum and interpolate onto the planet
-    wavelength grid.
-    """
-    lambda_rings, if_rings = np.loadtxt(RINGS_SPECTRA_FILE, skiprows=1, 
-                                        dtype=float, unpack=True, delimiter=",")
-    albedo_rings    = np.interp(target_wavelength_nm, lambda_rings, if_rings)
-
-    return albedo_rings
-
 def plot_spectra_dict(wavelength, spectra_dict, title,
                       ylabel="Albedo spectrum", cmap_name="viridis"):
     """Plot spectra stored in the dictionary."""
@@ -666,7 +655,7 @@ def plot_all_phase_curves(all_results: list) -> tuple:
 def main():
     # Load spectral data once 
     lambda_vac_nm, jup_albedo = utils.get_karkoschka_Jupiter_spectrum()
-    ring_albedo               = load_ring_albedo(lambda_vac_nm)
+    ring_albedo               = utils.load_ring_albedo(lambda_vac_nm)
     stellar_wavel, stellar_spectrum = utils.read_stellar_spectrum(STELLAR_SPECTRUM_FILE, 
                                                                   wavel_units=u.Angstrom)
     

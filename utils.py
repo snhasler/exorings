@@ -121,7 +121,7 @@ def ring_angular_extent(R_outer, system_distance):
     return ( (R_outer*2) / d_ringUnits * u.rad).to(u.mas) # angular extent in mas
     
 
-def get_karkoschka_Jupiter_spectrum(filepath="spectra/karkoschka1995low.dat"):
+def get_karkoschka_Jupiter_spectrum(filepath="spectra/planet/karkoschka1995low.dat"):
     """
     Read in Karkoschka Jupiter albedo spectrum from file
 
@@ -130,10 +130,21 @@ def get_karkoschka_Jupiter_spectrum(filepath="spectra/karkoschka1995low.dat"):
     filepath : str
         Path to Karkoschka Jupiter albedo spectrum file
     """
-    vacuum_lambda_nm, air_lambda_nm, ch4_abs, alb_Jup, alb_Sat, alb_Uranus, alb_Nep, alb_Titan = np.loadtxt(filepath, unpack=True)
+    vacuum_lambda_nm, air_lambda_nm, ch4_abs, alb_Jup, \
+        alb_Sat, alb_Uranus, alb_Nep, alb_Titan = np.loadtxt(filepath, unpack=True)
 
     return vacuum_lambda_nm, alb_Jup
 
+def load_ring_albedo(target_wavelength_nm):
+    """
+    Load Hedman+2013 ring spectrum and interpolate onto the planet
+    wavelength grid.
+    """
+    lambda_rings, if_rings = np.loadtxt(filepath="spectra/rings/Bring_110-111e3km_Hedman2013_nm.txt", 
+                                        skiprows=1, dtype=float, unpack=True, delimiter=",")
+    albedo_rings    = np.interp(target_wavelength_nm, lambda_rings, if_rings)
+
+    return albedo_rings
 
 def phi_lambert(alpha_deg):
     """ Lambertian phase function normalized to 1 at alpha=0.
