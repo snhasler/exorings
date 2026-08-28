@@ -1,5 +1,5 @@
 '''
-"Ray tracing" methods for ringed_planet_illumination.py
+"Ray casting" methods for exorings model
 S. Hasler
 '''
 
