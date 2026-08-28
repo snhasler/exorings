@@ -240,4 +240,4 @@ Space Telescope Science Institute (STScI)
 
 ## License
 
-Add an appropriate license (e.g., MIT, BSD-3, GPL) before public release.
+<!-- Add an appropriate license (e.g., MIT, BSD-3, GPL) before public release. -->
