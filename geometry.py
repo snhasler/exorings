@@ -16,6 +16,15 @@ def rotation_matrix_z(theta):
 def R_pCi(inc, Omega, omega):
     """
     Transformation matrix from perifocal to inertial coordinates.
+
+    Parameters
+    ----------
+    inc : float
+        Inclination in radians.
+    Omega : float
+        Longitude of ascending node in radians.
+    omega : float
+        Argument of periapsis in radians.
     """
     R = rotation_matrix_z(Omega) @ rotation_matrix_x(inc) @ rotation_matrix_z(omega)
     return R
