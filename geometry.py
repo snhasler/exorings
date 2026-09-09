@@ -21,6 +21,18 @@ def R_pCi(inc, Omega, omega):
     return R
 
 def ang_momentum_vector(R_pCi):
+    """
+    Parameters
+    ----------
+    R_pCi : np.ndarray
+        Transformation matrix from perifocal to inertial coordinates.
+
+    Returns 
+    -------
+    np.ndarray
+        Angular momentum vector in inertial coordinates.
+
+    """
     return R_pCi[2] / np.linalg.norm(R_pCi[2])
 
 def orthogonal_to_h(h_vector):
