@@ -1,6 +1,14 @@
 import numpy as np
 
 def rotation_matrix_x(theta):
+    """
+    Generate a rotation matrix for rotation about the x-axis.
+
+    Parameters
+    ----------
+    theta : float 
+        Angle in radians.
+    """
     c, s = np.cos(theta), np.sin(theta)
     return np.array([[1, 0, 0],
                      [0, c, s],
@@ -8,6 +16,15 @@ def rotation_matrix_x(theta):
 
 
 def rotation_matrix_z(theta):
+    """
+    Generate a rotation matrix for rotation about the z-axis.
+    
+    Parameters
+    ----------
+    theta : float
+        Angle in radians.
+        
+    """
     c, s = np.cos(theta), np.sin(theta)
     return np.array([[c, s, 0],
                      [-s,  c, 0],
@@ -136,6 +153,23 @@ def get_ring_normal(ring_points):
 def kepler_orbit(a, e, inc, Omega, omega, f, theta):
     """
     Cartesian planet position from Keplerian elements.
+
+    Parameters
+    ----------
+    a : float
+        Semi-major axis
+    e : float
+        Orbital eccentricity
+    inc : float
+        Inclination in radians
+    Omega : float
+        Longitude of ascending node in radians
+    omega : float
+        Argument of periapsis in radians
+    f : float
+        True anomaly in radians
+    theta : float
+        true_anomaly + omega
     """
     r = a * (1 - e**2) / (1 + e * np.cos(f))
     x = r * np.cos(f)
